@@ -88,7 +88,7 @@ export function createScene3D(root) {
   const scene = new THREE.Scene();
   const SURROUND = '#dcd4c4';
   scene.background = new THREE.Color(SURROUND);
-  scene.fog = new THREE.Fog(SURROUND, 2500, 6600);
+  scene.fog = new THREE.Fog(SURROUND, 1900, 5200);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -184,17 +184,17 @@ export function createScene3D(root) {
 
   const slabs = [];
   for (let i = 0; i < 30; i++) {
-    const w = 300 + rnd() * 520;
-    const d = 260 + rnd() * 470;
+    const w = 230 + rnd() * 380;
+    const d = 200 + rnd() * 340;
     const col = pick();
     const mat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.94, metalness: 0 });
-    const h = 26 + rnd() * 60;
+    const h = 24 + rnd() * 54;
     const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
     // A ring biased towards the far side so the composition frames the table
     // instead of hiding behind the camera.
     const ang = Math.PI * (0.18 + rnd() * 1.64) + Math.PI; // mostly -z half
-    const rad = 2050 + rnd() * 1500;
-    m.position.set(Math.cos(ang) * rad, -560 - rnd() * 1100, Math.sin(ang) * rad);
+    const rad = 760 + rnd() * 720;
+    m.position.set(Math.cos(ang) * rad, -95 - rnd() * 620, Math.sin(ang) * rad);
     m.rotation.y = (rnd() - 0.5) * 0.8;
     m.userData.spin = (rnd() - 0.5) * 0.02;
     m.userData.baseY = m.position.y;
@@ -206,9 +206,9 @@ export function createScene3D(root) {
   /* Framed Mondrian plates leaning in the distance. */
   const texLoader = new THREE.TextureLoader();
   const plates = [
-    { file: 'mondrian-red-blue-yellow.jpg', pos: [-1720, -120, -1620], rot: 0.62, size: 640 },
-    { file: 'mondrian-composition-1929.jpg', pos: [1680, -90, -1780], rot: -0.6, size: 620 },
-    { file: 'mondrian-no-iv-1914.jpg', pos: [-120, -300, -2350], rot: 0.08, size: 760 }
+    { file: 'mondrian-red-blue-yellow.jpg', pos: [-900, -20, -620], rot: 0.58, size: 440 },
+    { file: 'mondrian-composition-1929.jpg', pos: [900, -20, -620], rot: -0.58, size: 430 },
+    { file: 'mondrian-no-iv-1914.jpg', pos: [-40, -130, -1050], rot: 0.03, size: 520 }
   ];
   const base = import.meta.env.BASE_URL || './';
   for (const p of plates) {
