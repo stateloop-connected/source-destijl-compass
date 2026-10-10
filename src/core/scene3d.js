@@ -88,7 +88,7 @@ export function createScene3D(root) {
   const scene = new THREE.Scene();
   const SURROUND = '#dcd4c4';
   scene.background = new THREE.Color(SURROUND);
-  scene.fog = new THREE.Fog(SURROUND, 2450, 6400);
+  scene.fog = new THREE.Fog(SURROUND, 2500, 6600);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -184,8 +184,8 @@ export function createScene3D(root) {
 
   const slabs = [];
   for (let i = 0; i < 30; i++) {
-    const w = 340 + rnd() * 620;
-    const d = 300 + rnd() * 560;
+    const w = 300 + rnd() * 520;
+    const d = 260 + rnd() * 470;
     const col = pick();
     const mat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.94, metalness: 0 });
     const h = 26 + rnd() * 60;
@@ -193,8 +193,8 @@ export function createScene3D(root) {
     // A ring biased towards the far side so the composition frames the table
     // instead of hiding behind the camera.
     const ang = Math.PI * (0.18 + rnd() * 1.64) + Math.PI; // mostly -z half
-    const rad = 1500 + rnd() * 1500;
-    m.position.set(Math.cos(ang) * rad, -330 - rnd() * 950, Math.sin(ang) * rad);
+    const rad = 2050 + rnd() * 1500;
+    m.position.set(Math.cos(ang) * rad, -560 - rnd() * 1100, Math.sin(ang) * rad);
     m.rotation.y = (rnd() - 0.5) * 0.8;
     m.userData.spin = (rnd() - 0.5) * 0.02;
     m.userData.baseY = m.position.y;

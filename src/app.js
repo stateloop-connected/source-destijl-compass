@@ -207,7 +207,8 @@ export function boot() {
       el.innerHTML = `<b>${t('play.hint')}</b> ${pick(L.hint)} ` +
         `<button class="hint-toggle" type="button">${t('play.hint.hide')}</button>`;
     } else {
-      el.innerHTML = `<button class="hint-toggle" type="button">${t('play.hint.show')}</button>`;
+      el.innerHTML = `<button class="hint-toggle" type="button">${t('play.hint.show')}</button>` +
+        `<span class="cam-tip">${t('play.camtip')}</span>`;
     }
     const btn = el.querySelector('.hint-toggle');
     if (btn) btn.addEventListener('click', () => { UI.hintOpen = !UI.hintOpen; audio.ui(); renderHint(); });
@@ -257,7 +258,7 @@ export function boot() {
     FIT.near = 10; FIT.far = 9000;
     FIT.updateProjectionMatrix();
 
-    const LIM_X = 0.93, LIM_Y = 0.86;
+    const LIM_X = 0.98, LIM_Y = 0.95;
     let lo = 600, hi = 9000;
     for (let i = 0; i < 30; i++) {
       const d = (lo + hi) / 2;
@@ -273,6 +274,31 @@ export function boot() {
     }
     const dist = Math.min(hi, 5200);
     tweenCamera(target.clone().addScaledVector(fitDir, dist), target, 760);
+  }
+
+  function cancelTween() { UI.camTween = null; }
+
+  /**
+   * Pan the view along the table plane. `dx`/`dy` are in screen-ish units
+   * (right / away-from-camera); the step scales with the camera distance so
+   * panning feels the same at any zoom.
+   */
+  function panView(dx, dy) {
+    cancelTween();
+    const cam = S3.camera;
+    const right = new THREE.Vector3().setFromMatrixColumn(cam.matrix, 0);
+    right.y = 0;
+    if (right.lengthSq() < 1e-9) right.set(1, 0, 0);
+    right.normalize();
+    const fwd = new THREE.Vector3();
+    cam.getWorldDirection(fwd);
+    fwd.y = 0;
+    if (fwd.lengthSq() < 1e-9) fwd.set(0, 0, -1);
+    fwd.normalize();
+    const step = cam.position.distanceTo(S3.controls.target) * 0.075;
+    const delta = right.multiplyScalar(dx * step).add(fwd.multiplyScalar(dy * step));
+    cam.position.add(delta);
+    S3.controls.target.add(delta);
   }
 
   function updateCameraTween(now) {
@@ -332,6 +358,7 @@ export function boot() {
 
   function onDown(e) {
     if (e.button !== 0) return;
+    cancelTween();
     audio.unlock();
     const world = pointerWorld(e);
     down = { x: e.clientX, y: e.clientY, t: performance.now() };
@@ -626,6 +653,13 @@ export function boot() {
         return;
       }
       if (KEY_TOOL[e.key]) { setTool(KEY_TOOL[e.key]); return; }
+      const PAN = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] };
+      if (PAN[e.key]) {
+        e.preventDefault();
+        const [dx, dy] = PAN[e.key];
+        panView(dx, dy);
+        return;
+      }
       if (e.key.toLowerCase() === 'r') { audio.erase(); if (session.sandbox) startSandbox(); else startLevel(session.levelIndex); return; }
       if (e.key.toLowerCase() === 'h') { UI.hintOpen = !UI.hintOpen; renderHint(); return; }
       if (e.key.toLowerCase() === 'f') {

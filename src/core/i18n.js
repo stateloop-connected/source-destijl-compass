@@ -32,6 +32,7 @@ const STRINGS = {
     'play.hint': '提示',
     'play.hint.show': '显示提示',
     'play.hint.hide': '收起提示',
+    'play.camtip': '拖动旋转 · 右键或方向键平移 · 滚轮缩放 · F 复位视角',
 
     'tool.point': '点',
     'tool.segment': '线段',
@@ -56,11 +57,11 @@ const STRINGS = {
     'help.auto.h': '自动求交',
     'help.auto.p': '任意两条线段、圆或球相交时，交点/交线会<b>自动生成</b>并保持联动。拖动自由点时，全部派生对象同步更新。球与球相交得到圆，圆与桌面相交得到点——这正是三维作图的钥匙。',
     'help.keys.h': '快捷键',
-    'help.keys.p': '<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><kbd>5</kbd> 切换工具<br><kbd>Esc</kbd> 取消选择<br><kbd>Ctrl</kbd>+<kbd>Z</kbd> 撤销<br><kbd>R</kbd> 重置本关<br><kbd>H</kbd> 提示　<kbd>F</kbd> 复位视角　<kbd>L</kbd> 切换语言',
+    'help.keys.p': '<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><kbd>5</kbd> 切换工具<br><kbd>Esc</kbd> 取消选择<br><kbd>Ctrl</kbd>+<kbd>Z</kbd> 撤销<br><kbd>R</kbd> 重置本关<br><kbd>←↑↓→</kbd> 平移视角<br><kbd>H</kbd> 提示　<kbd>F</kbd> 复位视角　<kbd>L</kbd> 切换语言',
     'help.score.h': '星级评价',
     'help.score.p': '以<b>标准步数</b>完成可得三星，多两步以内两星。步骤越少，构造越优雅——这正是尺规作图的精神。',
     'help.camera.h': '观察视角',
-    'help.camera.p': '可以 360° 自由旋转视角：拖动旋转，滚轮缩放，右键平移，按 <kbd>F</kbd> 回到默认视角。三维构造会浮出桌面，转动视角即可看清立体关系。',
+    'help.camera.p': '可以 360° 自由旋转视角：拖动旋转，滚轮缩放，右键拖动或<kbd>方向键</kbd>平移，按 <kbd>F</kbd> 回到默认视角。三维构造会浮出桌面，转动视角即可看清立体关系。',
 
     'toast.locked': '先完成前一关',
     'toast.undo.empty': '没有可撤销的操作',
@@ -108,6 +109,7 @@ const STRINGS = {
     'play.hint': 'Hint',
     'play.hint.show': 'Show hint',
     'play.hint.hide': 'Hide hint',
+    'play.camtip': 'Drag to orbit · right-drag or arrow keys to pan · scroll to zoom · F to reset view',
 
     'tool.point': 'Point',
     'tool.segment': 'Segment',
@@ -132,11 +134,11 @@ const STRINGS = {
     'help.auto.h': 'Automatic Intersections',
     'help.auto.p': 'Any two segments, circles or spheres that meet produce <b>automatic</b> intersections that stay linked. Drag a free point and every derived object updates. Sphere \u2229 sphere gives a circle, circle \u2229 table gives points \u2014 that is the key to 3D construction.',
     'help.keys.h': 'Shortcuts',
-    'help.keys.p': '<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><kbd>5</kbd> switch tool<br><kbd>Esc</kbd> cancel<br><kbd>Ctrl</kbd>+<kbd>Z</kbd> undo<br><kbd>R</kbd> reset level<br><kbd>H</kbd> hint &nbsp; <kbd>F</kbd> reset view &nbsp; <kbd>L</kbd> language',
+    'help.keys.p': '<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><kbd>5</kbd> switch tool<br><kbd>Esc</kbd> cancel<br><kbd>Ctrl</kbd>+<kbd>Z</kbd> undo<br><kbd>R</kbd> reset level<br><kbd>←↑↓→</kbd> pan the view<br><kbd>H</kbd> hint &nbsp; <kbd>F</kbd> reset view &nbsp; <kbd>L</kbd> language',
     'help.score.h': 'Star Rating',
     'help.score.p': 'Match the <b>par</b> step count for three stars, or come within two steps for two. Fewer steps means a more elegant construction \u2014 the whole point of classical geometry.',
     'help.camera.h': 'Camera',
-    'help.camera.p': 'Orbit a full 360°: drag to rotate, scroll to zoom, right-drag to pan, press <kbd>F</kbd> to return to the default view. 3D constructions rise off the table \u2014 rotate to read the solid relationships.',
+    'help.camera.p': 'Orbit a full 360°: drag to rotate, scroll to zoom, right-drag or use the arrow keys to pan, press <kbd>F</kbd> to return to the default view. 3D constructions rise off the table \u2014 rotate to read the solid relationships.',
 
     'toast.locked': 'Finish the previous level first',
     'toast.undo.empty': 'Nothing to undo',
