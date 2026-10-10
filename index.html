@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="description" content="几何构成 3D — 用圆规与直尺构造蒙德里安的秩序。A De Stijl straightedge-and-compass construction game in three.js.">
+<meta name="theme-color" content="#f7f4ef">
+<title>几何构成 3D · De Stijl</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f4ef'/%3E%3Crect x='3' y='3' width='13' height='13' fill='%23d32029'/%3E%3Crect x='18' y='3' width='11' height='7' fill='%231e4c9a'/%3E%3Crect x='18' y='12' width='11' height='17' fill='%23f4c430'/%3E%3Crect x='3' y='18' width='13' height='11' fill='%231a1a1a'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+<div id="app" data-view="home">
+
+  <!-- three.js canvas + HTML labels live here -->
+  <div id="scene" aria-hidden="true"></div>
+
+  <!-- ============ HOME ============ -->
+  <section class="view" id="view-home" data-view="home">
+    <div class="sheet">
+      <div class="brand-hero">
+        <div class="logo-mark"><i></i><i></i><i></i><i></i></div>
+        <h1 data-i18n="brand.name">几何构成</h1>
+        <p class="sub" data-i18n="brand.sub">De Stijl · 三维尺规作图</p>
+        <p class="tagline" data-i18n="home.tagline">以圆规与直尺，构造蒙德里安的秩序</p>
+      </div>
+
+      <div class="progress-line">
+        <span id="progressLabel">进度 0 / 11</span>
+        <span class="progress-bar"><i id="progressFill"></i></span>
+        <span id="starLabel">★ 0 / 33</span>
+      </div>
+
+      <div class="level-grid" id="levelGrid"></div>
+
+      <div class="ach-row" id="achRow"></div>
+
+      <div class="home-foot">
+        <button class="btn primary" id="btnSandbox" type="button" data-i18n="home.sandbox">自由作图</button>
+        <button class="btn" id="btnHelp" type="button" data-i18n="home.help">玩法说明</button>
+        <button class="btn" id="btnSound" type="button"></button>
+        <button class="btn" id="btnLang" type="button"></button>
+        <button class="btn danger" id="btnClear" type="button" data-i18n="home.clear">清除进度</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HELP ============ -->
+  <section class="view" id="view-help" data-view="help">
+    <div class="page">
+      <header class="page-head">
+        <button class="btn icon" id="btnHelpBack" type="button" aria-label="back">←</button>
+        <h2 data-i18n="help.title">玩法说明</h2>
+      </header>
+      <div class="help-grid">
+        <article class="help-item"><h3 data-i18n="help.tools.h">作图工具</h3><p data-i18n="help.tools.p"></p></article>
+        <article class="help-item"><h3 data-i18n="help.auto.h">自动求交</h3><p data-i18n="help.auto.p"></p></article>
+        <article class="help-item"><h3 data-i18n="help.keys.h">快捷键</h3><p data-i18n="help.keys.p"></p></article>
+        <article class="help-item"><h3 data-i18n="help.score.h">星级评价</h3><p data-i18n="help.score.p"></p></article>
+        <article class="help-item"><h3 data-i18n="help.camera.h">观察视角</h3><p data-i18n="help.camera.p"></p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLAY ============ -->
+  <section class="view" id="view-play" data-view="play">
+    <header class="topbar">
+      <button class="btn icon" id="btnHome" type="button" aria-label="menu">←</button>
+      <div class="brand"><span class="logo"></span><span data-i18n="brand.name">几何构成</span></div>
+      <div class="level-info">
+        <span class="level-badge" id="levelBadge">1 / 11</span>
+        <span class="level-title" id="levelTitle"></span>
+      </div>
+      <div class="actions">
+        <span class="stat" id="statStars" title="stars">★★★</span>
+        <span class="stat" id="statOps">0 / 0</span>
+        <span class="stat" id="statTime">0:00</span>
+        <button class="btn" id="btnUndo" type="button" data-i18n="play.undo" disabled>撤销</button>
+        <button class="btn" id="btnReset" type="button" data-i18n="play.reset">重置</button>
+      </div>
+    </header>
+
+    <div class="goal" id="goalText"></div>
+
+    <div class="toolbar" id="toolbar" role="toolbar">
+      <button class="tool active" data-tool="point" type="button" aria-pressed="true">
+        <svg class="icon" viewBox="0 0 18 18" aria-hidden="true"><rect x="4" y="4" width="10" height="10" fill="currentColor"/></svg>
+        <span data-i18n="tool.point">点</span>
+      </button>
+      <button class="tool" data-tool="segment" type="button" aria-pressed="false">
+        <svg class="icon" viewBox="0 0 18 18" aria-hidden="true"><line x1="3" y1="15" x2="15" y2="3" stroke="currentColor" stroke-width="2.5"/></svg>
+        <span data-i18n="tool.segment">线段</span>
+      </button>
+      <button class="tool" data-tool="circle" type="button" aria-pressed="false">
+        <svg class="icon" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+        <span data-i18n="tool.circle">圆</span>
+      </button>
+      <button class="tool" data-tool="sphere" type="button" aria-pressed="false">
+        <svg class="icon" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><ellipse cx="9" cy="9" rx="6.5" ry="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span data-i18n="tool.sphere">球</span>
+      </button>
+      <button class="tool" data-tool="move" type="button" aria-pressed="false">
+        <svg class="icon" viewBox="0 0 18 18" aria-hidden="true">
+          <rect x="7" y="1" width="4" height="4" fill="currentColor"/><rect x="7" y="13" width="4" height="4" fill="currentColor"/>
+          <rect x="1" y="7" width="4" height="4" fill="currentColor"/><rect x="13" y="7" width="4" height="4" fill="currentColor"/>
+        </svg>
+        <span data-i18n="tool.move">移动</span>
+      </button>
+    </div>
+
+    <div class="hint" id="hintText"></div>
+
+    <div class="overlay" id="overlay">
+      <div class="card" role="dialog" aria-modal="true">
+        <div class="tick" id="solvedTick">✓</div>
+        <h2 id="solvedTitle">构成完成</h2>
+        <div class="stars" id="solvedStars"></div>
+        <p id="solvedMsg"></p>
+        <div class="card-actions">
+          <button class="btn" id="btnReplay" type="button" data-i18n="solved.replay">重玩</button>
+          <button class="btn primary" id="btnNext" type="button" data-i18n="solved.next">下一关</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="toasts"></div>
+</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
