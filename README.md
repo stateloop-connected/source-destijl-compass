@@ -1,5 +1,4 @@
 # 几何构成 3D · De Stijl Compass
-
 > 用圆规与直尺，构造蒙德里安的秩序。
 > Straightedge and compass, in Mondrian's order.
 
@@ -12,7 +11,6 @@ A 3D straightedge-and-compass construction game built with **three.js**, staged 
 ---
 
 ## 玩法 · How to play
-
 | 工具 Tool | 说明 |
 | --- | --- |
 | **点 Point** `1` | 在桌面空白处放置自由点 · drop a free point on the table |
@@ -37,13 +35,11 @@ A 3D straightedge-and-compass construction game built with **three.js**, staged 
 **过关判定** — 必须把图形**真正画出来**：例如等边三角形要求三条边都画出，正方形要求四条边围合，正四面体要求六条棱全部连起来。仅有交点不算完成。
 
 ### 快捷键 Shortcuts
-
 `1`–`5` 切换工具 · `Esc` 取消 / 返回 · `Ctrl`+`Z` 撤销 · `R` 重置本关 · `H` 提示 · `F` 复位视角 · `L` 中英切换
 
 ---
 
 ## 关卡 Levels
-
 | # | 关卡 | Level | Par |
 | --- | --- | --- | --- |
 | 1 | 等边三角形 | Equilateral Triangle | 4 |
@@ -66,7 +62,6 @@ Every check tests the geometric relation, not a particular method.
 ---
 
 ## 运行 · Run
-
 ```bash
 npm install
 npm run dev      # http://localhost:5178
@@ -75,7 +70,6 @@ npm test         # 几何引擎与关卡可解性测试
 ```
 
 ## 结构 · Layout
-
 ```
 index.html            页面骨架 / HUD
 src/
@@ -103,7 +97,6 @@ docs/                 构建产物（GitHub Pages 发布目录）
 ```
 
 ## 设计要点 · Notes
-
 * **几何引擎与渲染完全解耦**：`math3.js` / `model.js` / `levels.js` 不依赖 DOM 或 three.js，因此整局游戏可以在 node 里被完整模拟与测试（`npm test` 会为每一关实际跑一遍标准作法，并断言步数 ≤ par）。
 * **依赖图 + 拓扑重建**：派生对象按插入顺序重建（插入顺序天然是拓扑序），拖动自由点时整张图实时联动。
 * **自动求交有上限**：空间哈希去重 + 迭代上限 + 对象总数上限，避免病态爆炸。
@@ -112,6 +105,5 @@ docs/                 构建产物（GitHub Pages 发布目录）
 * **光照按物理单位标定**：总辐照度约为 π，使纸面 albedo 1:1 呈现，网格与纸纹才不会被过曝冲白。
 
 ## 授权 · License
-
 代码以 **MIT** 授权，见 [LICENSE](LICENSE)。第三方素材（three.js、字体、Mondrian 原作）的来源与许可见 [CREDITS.md](CREDITS.md)。
 Code is MIT. Third-party assets are listed in [CREDITS.md](CREDITS.md).
